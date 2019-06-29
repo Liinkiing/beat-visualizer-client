@@ -25,6 +25,7 @@
     "react-dom": "npm:@hot-loader/react-dom",
     "react-hot-loader": "^4.11.1",
     "react-scripts": "3.0.1",
+    "react-spring": "^8.0.25",
     "styled-components": "^4.1.3",
     "ts-optchain": "^0.1.3",
     "typescript": "3.5.2"
