@@ -5,6 +5,10 @@ import bootstrap from 'styles/bootstrap'
 export default createGlobalStyle`
   ${bootstrap};
   
+  * {
+    box-sizing: border-box;
+  }
+  
   html {
     font-size: 100%;
   }
@@ -31,9 +35,6 @@ export default createGlobalStyle`
     opacity: 0.8;
     &:hover {
       cursor: pointer;
-      opacity: 1;
-    }
-    &[aria-current] {
       opacity: 1;
     }
   }
