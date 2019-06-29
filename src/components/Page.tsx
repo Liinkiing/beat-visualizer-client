@@ -7,7 +7,12 @@ interface Props {
 }
 
 const PageInner = styled.div`
-  
+  width: inherit;
+  height: inherit;
+  & > * {
+    width: inherit;
+    height: inherit;
+  }
 `
 
 const Page: FunctionComponent<Props> = props => {
@@ -28,7 +33,7 @@ const Page: FunctionComponent<Props> = props => {
 }
 
 Page.defaultProps = {
-  container: true
+  container: false
 }
 
 export default Page

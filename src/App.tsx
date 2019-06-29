@@ -21,30 +21,36 @@ const AppInner = styled.div`
  right: 0;
  bottom: 0; 
  & > header {
-  flex: 1;
-  max-width: 300px;
+  width: 220px;
+  align-content: stretch;
  }
  & > main {
-  flex: 3;
+  flex: 1;
+  pointer-events: none;
+  & > div[role="group"] {
+    width: 100%;
+    height: 100%;
+  }
+ }
+ & > header, & > main {
+  z-index: 1;
  }
 `
 
 const App: FunctionComponent = () => {
   return (
-    <>
+    <AppInner>
+      <header>
+        <AppNav/>
+      </header>
+      <main>
+        <Router>
+          <Route component={Home} path="/"/>
+          <Route component={About} path="/about"/>
+        </Router>
+      </main>
       <AppBackground pointsCount={100}/>
-      <AppInner>
-        <header>
-          <AppNav/>
-        </header>
-        <main>
-          <Router>
-            <Route component={Home} path="/"/>
-            <Route component={About} path="/about"/>
-          </Router>
-        </main>
-      </AppInner>
-    </>
+    </AppInner>
   );
 }
 

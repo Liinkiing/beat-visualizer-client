@@ -23,4 +23,18 @@ export default createGlobalStyle`
     font-weight: 700;
     font-family: 'Hind Siliguri', sans-serif;
   }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: all .3s;
+    opacity: 0.8;
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+    &[aria-current] {
+      opacity: 1;
+    }
+  }
 `
