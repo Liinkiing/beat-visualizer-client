@@ -1,7 +1,8 @@
 import React, {FunctionComponent} from "react"
 import {hot} from 'react-hot-loader/root'
 import {setConfig} from 'react-hot-loader';
-import styled from "styled-components"
+import styled from 'styled-components/macro'
+import AppBackground from 'components/ui/AppBackground'
 
 setConfig({
   reloadHooks: true,
@@ -14,6 +15,7 @@ const AppInner = styled.div`
 const App: FunctionComponent = () => {
   return (
     <AppInner>
+      <AppBackground/>
       <header>
         <h1>Header</h1>
       </header>

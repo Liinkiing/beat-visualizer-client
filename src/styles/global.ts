@@ -1,4 +1,4 @@
-import {createGlobalStyle} from "styled-components"
+import {createGlobalStyle} from "styled-components/macro"
 import {lightGray} from 'styles/modules/colors'
 import bootstrap from 'styles/bootstrap'
 
