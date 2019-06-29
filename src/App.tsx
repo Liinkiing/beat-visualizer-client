@@ -1,5 +1,11 @@
-import React, { FunctionComponent } from "react"
+import React, {FunctionComponent} from "react"
+import {hot} from 'react-hot-loader/root'
+import {setConfig} from 'react-hot-loader';
 import styled from "styled-components"
+
+setConfig({
+  reloadHooks: true,
+});
 
 const AppInner = styled.div`
   
@@ -18,4 +24,6 @@ const App: FunctionComponent = () => {
   );
 }
 
-export default App
+export default hot(
+  App
+)
