@@ -8,6 +8,7 @@ generates:
   ./src/graphql/components.tsx:
     config:
       withHooks: true
+      avoidOptionals: true
       noNamespaces: true
     plugins:
       - "typescript-common"
