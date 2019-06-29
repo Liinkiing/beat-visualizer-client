@@ -1,5 +1,10 @@
-import {Props as PointProps} from 'components/ui/AppBackground/Point'
-
 export type Color = string
 
-export type BackgroundPoint = PointProps
+export interface BackgroundPoint {
+  readonly radius?: number,
+  readonly color?: Color,
+  readonly x: number,
+  readonly y: number,
+  readonly blurred?: boolean
+  readonly depth?: number
+}

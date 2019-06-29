@@ -15,7 +15,7 @@ const AppInner = styled.div`
 const App: FunctionComponent = () => {
   return (
     <AppInner>
-      <AppBackground/>
+      <AppBackground pointsCount={60}/>
       <header>
         <h1>Header</h1>
       </header>

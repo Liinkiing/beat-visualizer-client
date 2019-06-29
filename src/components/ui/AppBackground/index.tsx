@@ -1,9 +1,10 @@
 import React, {useRef} from 'react'
+import {animated, useSpring} from 'react-spring'
 import styled from 'styled-components/macro'
-import Point from 'components/ui/AppBackground/Point'
 import {BackgroundPoint} from '@types'
 import {randomBoolean, randomRange} from 'utils/functions'
 import {red} from 'styles/modules/colors'
+import {calc, getPointStyle, SpringProps} from 'components/ui/AppBackground/springs'
 
 interface Props {
   readonly pointsCount?: number
@@ -15,7 +16,7 @@ const generatePoints = (count: number): BackgroundPoint[] =>
       blurred: randomBoolean(),
       depth: randomRange(0, 10),
       color: red,
-      radius: randomRange(10, 30),
+      radius: randomRange(3, 12),
       x: randomRange(0, window.innerWidth),
       y: randomRange(0, window.innerHeight),
     }))
@@ -32,11 +33,13 @@ const AppBackgroundInner = styled.div`
 const AppBackground: React.FC<Props> = (props) => {
   const { pointsCount } = props
   const points = useRef(generatePoints(pointsCount!))
+  const [springProps, set] = useSpring<SpringProps>(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }))
+  const onMouseMove: React.MouseEventHandler = ({ clientX: x, clientY: y }) => set({xy: calc(x, y)})
 
   return (
-    <AppBackgroundInner>
+    <AppBackgroundInner onMouseMove={onMouseMove}>
       {points.current.map((point, i) =>
-        <Point key={i} {...point}/>
+        <animated.div key={i} style={getPointStyle(springProps, point)}/>
       )}
     </AppBackgroundInner>
   )
