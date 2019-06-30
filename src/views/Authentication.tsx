@@ -10,7 +10,7 @@ interface Props extends RouteComponentProps {
 }
 
 const Authentication: React.FC<Props> = ({ location }) => {
-  const viewer = useViewerQuery({ suspend: true })
+  const viewer = useViewerQuery()
 
   const query: ParsedQuery = parse(location!.search)
   if (query.access_token && query.refresh_token) {

@@ -70,7 +70,12 @@ const AppInner = styled.div`
 const App: FunctionComponent = () => {
   const viewer = useViewerQuery()
   useEffect(() => {
-    viewer !== null ? AppStore.loggedIn() : AppStore.loggedOff()
+    console.log(viewer.data)
+    if (viewer && viewer.data && viewer.data.viewer !== null)  {
+      AppStore.loggedIn()
+    } else {
+      AppStore.loggedOff()
+    }
   }, [viewer])
 
   return (

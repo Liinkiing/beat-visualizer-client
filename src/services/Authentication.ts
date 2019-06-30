@@ -3,9 +3,6 @@ import {SpotifyUserScope} from '@types';
 export const AUTH_REFRESH_TOKEN = 'refresh_token'
 export const AUTH_ACCESS_TOKEN = 'access_token'
 
-const LOGOUT_REDIRECT_URL = '/login'
-const LOGIN_REDIRECT_URL = '/'
-
 interface SpotifyTokenRefreshResponse {
   access_token: string,
   token_type: 'Bearer',
