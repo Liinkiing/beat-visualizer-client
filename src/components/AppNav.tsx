@@ -3,6 +3,7 @@ import styled from 'styled-components/macro'
 import {Link} from '@reach/router'
 import {dark, white} from 'styles/modules/colors'
 import {rgba} from 'polished'
+import {AuthenticationService} from 'services/Authentication'
 
 const AppNavInner = styled.nav`
   width: 100%;
@@ -55,11 +56,12 @@ const LinksContainer = styled.ul`
 `
 
 const AppNav: React.FC = () => {
-
+  const { isLoggedIn } = AuthenticationService
   return (
     <AppNavInner>
       <LinksContainer>
-        <li><Link to="/">Home</Link></li>
+        {isLoggedIn && <li><Link to="/">Home</Link></li>}
+        {!isLoggedIn && <li><Link to="/login">Login</Link></li>}
         <li><Link to="/about">About</Link></li>
       </LinksContainer>
     </AppNavInner>

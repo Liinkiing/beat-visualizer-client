@@ -9,6 +9,10 @@ import Home from 'views/Home'
 import About from 'views/About'
 import AppNav from 'components/AppNav'
 import posed, {PoseGroup} from 'react-pose'
+import ProtectedRoute from 'components/ProtectedRoute'
+import AnonRoute from 'components/AnonRoute'
+import Login from 'views/Login'
+import Authentication from 'views/Authentication'
 
 setConfig({
   reloadHooks: true,
@@ -68,7 +72,9 @@ const App: FunctionComponent = () => {
       </header>
       <main>
         <PosedRouter>
-          <Route component={Home} path="/"/>
+          <ProtectedRoute component={Home} path="/"/>
+          <AnonRoute component={Login} path="/login"/>
+          <AnonRoute component={Authentication} path="/authentication"/>
           <Route component={About} path="/about"/>
         </PosedRouter>
       </main>

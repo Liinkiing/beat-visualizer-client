@@ -1,3 +1,12 @@
+import {SpotifyUserScope} from '@types';
+
+interface SpotifyAuthorizeResponse {
+  access_token: string,
+  token_type: 'Bearer',
+  expires_in: number,
+  scope: SpotifyUserScope,
+}
+
 class Client {
 
   constructor(private readonly host: string, private readonly authorizeEndpoint: string) {}
