@@ -35,7 +35,6 @@
     "react-apollo-hooks": "^0.4.1",
     "react-dom": "npm:@hot-loader/react-dom",
     "react-hot-loader": "^4.11.1",
-    "react-loader-spinner": "^2.3.0",
     "react-pose": "^4.0.8",
     "react-scripts": "3.0.1",
     "react-spring": "^8.0.25",

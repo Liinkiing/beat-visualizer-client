@@ -11,6 +11,7 @@ import App from "./App"
 import GlobalStyle from "./styles/global"
 import * as serviceWorker from "./serviceWorker"
 import {authLink, errorLink} from 'links'
+import GlobalLoader from 'components/ui/GlobalLoader'
 
 const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql' });
 
@@ -29,7 +30,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
       <GlobalStyle/>
-      <React.Suspense fallback={<div>Loading...</div>}>
+      <React.Suspense fallback={<GlobalLoader/>}>
         <App/>
       </React.Suspense>
     </ApolloHooksProvider>
