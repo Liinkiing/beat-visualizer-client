@@ -15,6 +15,11 @@ import {authLink, errorLink} from 'links'
 const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql' });
 
 const client = new ApolloClient({
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'cache-first'
+    }
+  },
   link: from([errorLink, authLink, httpLink]),
   cache: new InMemoryCache(),
 })
@@ -24,7 +29,9 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
       <GlobalStyle/>
-      <App/>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <App/>
+      </React.Suspense>
     </ApolloHooksProvider>
   </ApolloProvider>
   , document.getElementById("root"))

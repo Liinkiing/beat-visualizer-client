@@ -70,18 +70,18 @@ const LinksContainer = styled.ul`
 `
 
 const AppNav: React.FC = () => {
-  const viewer = useViewerQuery({ suspend: true })
+  const {data, refetch: refetchUser} = useViewerQuery()
   const { isLoggedIn } = AppStore
   const handleLogout = () => {
     AuthenticationService.logout()
     AppStore.loggedOff()
-    viewer.refetch()
+    refetchUser()
   }
 
   return (
     <AppNavInner>
       <LinksContainer>
-        {isLoggedIn && <li><Link to="/">Home</Link></li>}
+        {isLoggedIn && <li><Link to="/">{ data && data.viewer ? data.viewer.displayName : 'Home'}</Link></li>}
         {!isLoggedIn && <li><Link to="/login">Login</Link></li>}
         <li><Link to="/about">About</Link></li>
       </LinksContainer>

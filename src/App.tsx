@@ -68,9 +68,8 @@ const AppInner = styled.div`
 `
 
 const App: FunctionComponent = () => {
-  const viewer = useViewerQuery()
+  const viewer = useViewerQuery({ suspend: true })
   useEffect(() => {
-    console.log(viewer.data)
     if (viewer && viewer.data && viewer.data.viewer !== null)  {
       AppStore.loggedIn()
     } else {
@@ -80,22 +79,20 @@ const App: FunctionComponent = () => {
 
   return (
     <CurrentUserContext.Provider value={viewer && viewer.data && viewer.data.viewer ? viewer.data.viewer : null}>
-      <React.Suspense fallback={<div>Loading...</div>}>
-        <AppInner>
-          <header>
-            <AppNav/>
-          </header>
-          <main>
-            <PosedRouter>
-              <ProtectedRoute component={Home} path="/"/>
-              <AnonRoute component={Login} path="/login"/>
-              <AnonRoute component={Authentication} path="/authentication"/>
-              <Route component={About} path="/about"/>
-            </PosedRouter>
-          </main>
-          <AppBackground pointsCount={100}/>
-        </AppInner>
-      </React.Suspense>
+      <AppInner>
+        <header>
+          <AppNav/>
+        </header>
+        <main>
+          <PosedRouter>
+            <ProtectedRoute component={Home} path="/"/>
+            <AnonRoute component={Login} path="/login"/>
+            <AnonRoute component={Authentication} path="/authentication"/>
+            <Route component={About} path="/about"/>
+          </PosedRouter>
+        </main>
+        <AppBackground pointsCount={100}/>
+      </AppInner>
     </CurrentUserContext.Provider>
   );
 }
