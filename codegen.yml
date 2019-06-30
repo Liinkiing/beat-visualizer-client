@@ -11,6 +11,7 @@ generates:
       avoidOptionals: true
       noNamespaces: true
     plugins:
+      - add: '/* eslint-disable */'
       - "typescript-common"
       - "typescript-client"
       - "typescript-react-apollo"

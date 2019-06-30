@@ -8,3 +8,5 @@ export interface BackgroundPoint {
   readonly blurred?: boolean
   readonly depth?: number
 }
+
+export type SpotifyUserScope = string

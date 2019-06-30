@@ -1,0 +1,12 @@
+fragment ViewerQuery_user on SpotifyUser {
+  displayName
+  email
+  birthdate
+  followers {
+    total
+  }
+  href
+  images {
+    url
+  }
+}

@@ -11,6 +11,7 @@ const HomeInner = styled.div`
   align-items: center;
 `
 
+
 const Home: FunctionComponent = props => {
 
   return (
