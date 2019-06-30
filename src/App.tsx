@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from "react"
+import React, {FunctionComponent, useEffect} from "react"
 import {hot} from 'react-hot-loader/root'
 import {setConfig} from 'react-hot-loader';
 import styled from 'styled-components/macro'
@@ -13,6 +13,9 @@ import ProtectedRoute from 'components/ProtectedRoute'
 import AnonRoute from 'components/AnonRoute'
 import Login from 'views/Login'
 import Authentication from 'views/Authentication'
+import {CurrentUserContext} from 'contexts/user'
+import {AppStore} from 'stores/AppStore'
+import {useViewerQuery} from 'graphql/components'
 
 setConfig({
   reloadHooks: true,
@@ -65,21 +68,30 @@ const AppInner = styled.div`
 `
 
 const App: FunctionComponent = () => {
+  const viewer = useViewerQuery()
+  useEffect(() => {
+    viewer !== null ? AppStore.loggedIn() : AppStore.loggedOff()
+  }, [viewer])
+
   return (
-    <AppInner>
-      <header>
-        <AppNav/>
-      </header>
-      <main>
-        <PosedRouter>
-          <ProtectedRoute component={Home} path="/"/>
-          <AnonRoute component={Login} path="/login"/>
-          <AnonRoute component={Authentication} path="/authentication"/>
-          <Route component={About} path="/about"/>
-        </PosedRouter>
-      </main>
-      <AppBackground pointsCount={100}/>
-    </AppInner>
+    <CurrentUserContext.Provider value={viewer && viewer.data && viewer.data.viewer ? viewer.data.viewer : null}>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <AppInner>
+          <header>
+            <AppNav/>
+          </header>
+          <main>
+            <PosedRouter>
+              <ProtectedRoute component={Home} path="/"/>
+              <AnonRoute component={Login} path="/login"/>
+              <AnonRoute component={Authentication} path="/authentication"/>
+              <Route component={About} path="/about"/>
+            </PosedRouter>
+          </main>
+          <AppBackground pointsCount={100}/>
+        </AppInner>
+      </React.Suspense>
+    </CurrentUserContext.Provider>
   );
 }
 

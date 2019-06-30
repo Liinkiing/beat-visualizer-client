@@ -21,7 +21,13 @@
     "@types/react-dom": "16.8.4",
     "apollo-boost": "^0.4.3",
     "apollo-cache-inmemory": "^1.4.3",
+    "apollo-link": "^1.2.12",
+    "apollo-link-context": "^1.0.18",
+    "apollo-link-error": "^1.1.11",
+    "apollo-link-http-common": "^0.2.14",
     "graphql": "^14.1.1",
+    "mobx": "^5.10.1",
+    "mobx-react-lite": "^1.4.1",
     "polished": "^3.4.1",
     "query-string": "^6.8.1",
     "react": "^16.8.3",
@@ -29,6 +35,7 @@
     "react-apollo-hooks": "^0.4.1",
     "react-dom": "npm:@hot-loader/react-dom",
     "react-hot-loader": "^4.11.1",
+    "react-loader-spinner": "^2.3.0",
     "react-pose": "^4.0.8",
     "react-scripts": "3.0.1",
     "react-spring": "^8.0.25",
@@ -58,6 +65,7 @@
     "@types/styled-components": "^4.1.10",
     "babel-plugin-styled-components": "^1.10.4",
     "graphql-code-generator": "^0.18.2",
+    "graphql-codegen-add": "^0.18.2",
     "graphql-codegen-typescript-react-apollo-template": "^0.18.2"
   }
 }

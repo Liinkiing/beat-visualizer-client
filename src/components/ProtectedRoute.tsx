@@ -1,13 +1,15 @@
 import React, {FunctionComponent} from 'react'
 import {Redirect, RouteComponentProps} from '@reach/router'
-import {AuthenticationService} from 'services/Authentication'
+import {AppStore} from 'stores/AppStore'
+import {observer} from 'mobx-react-lite'
 
 type Props = { component: FunctionComponent } & RouteComponentProps
 
 const REDIRECT_URL = '/login'
 
 const ProtectedRoute: FunctionComponent<Props> = ({component: Component, ...rest}) => {
-  if (!AuthenticationService.isLoggedIn) {
+  const { isLoggedIn } = AppStore
+  if (!isLoggedIn) {
     return <Redirect to={REDIRECT_URL} noThrow/>
   }
 
@@ -16,4 +18,6 @@ const ProtectedRoute: FunctionComponent<Props> = ({component: Component, ...rest
   );
 };
 
-export default ProtectedRoute;
+export default observer(
+  ProtectedRoute
+);

@@ -5,6 +5,33 @@ schema {
 }
 
 type Query {
-  "Get hello"
-  hello: String!
+  "Get the current user logged into Spotify"
+  viewer: SpotifyUser
 }
+
+"A user from the Spotify API"
+type SpotifyUser {
+  birthdate: DateTime!
+  displayName: String!
+  email: String!
+  followers: SpotifyUserFollowers!
+  href: String
+  id: ID!
+  images: [SpotifyUserImage!]!
+}
+
+"Represent the followers of the user"
+type SpotifyUserFollowers {
+  href: String
+  total: Int!
+}
+
+"An image representation of the user"
+type SpotifyUserImage {
+  height: Int
+  url: String!
+  width: Int
+}
+
+
+scalar DateTime

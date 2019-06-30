@@ -3,8 +3,8 @@ import {SpotifyUserScope} from '@types';
 export const AUTH_REFRESH_TOKEN = 'refresh_token'
 export const AUTH_ACCESS_TOKEN = 'access_token'
 
-const LOGOUT_REDIRECT_URL = '/'
-const LOGIN_REDIRECT_URL = '/dashboard'
+const LOGOUT_REDIRECT_URL = '/login'
+const LOGIN_REDIRECT_URL = '/'
 
 interface SpotifyTokenRefreshResponse {
   access_token: string,
@@ -19,10 +19,9 @@ class Authentication {
 
   public login = (accessToken: string, refreshToken: string) => {
     this.setTokens(accessToken, refreshToken)
-    window.location.href = LOGIN_REDIRECT_URL
   };
 
-  get hasToken(): boolean {
+  get hasAccessToken(): boolean {
     return (
       localStorage.getItem(AUTH_ACCESS_TOKEN) !== "undefined" &&
       localStorage.getItem(AUTH_ACCESS_TOKEN) !== undefined &&
@@ -38,6 +37,10 @@ class Authentication {
     );
   }
 
+  get hasTokens(): boolean {
+    return this.hasAccessToken && this.hasAccessToken
+  }
+
   private removeToken = (): void => {
     localStorage.removeItem(AUTH_ACCESS_TOKEN);
   };
@@ -49,7 +52,6 @@ class Authentication {
   public logout = (): void => {
     this.removeToken()
     this.removeRefreshToken()
-    window.location.href = LOGOUT_REDIRECT_URL
   }
 
   private setAccessToken = (accessToken: string): void => {
@@ -64,13 +66,18 @@ class Authentication {
 
   public getRefreshToken = (): string | null => localStorage.getItem(AUTH_REFRESH_TOKEN);
 
+  public getTokens = (): { accessToken: string | null, refreshToken: string | null } => ({
+    accessToken: this.getAccessToken(),
+    refreshToken: this.getRefreshToken()
+  })
+
   private setTokens = (accessToken: string, refreshToken: string) => {
     this.setAccessToken(accessToken);
     this.setRefreshToken(refreshToken);
   };
 
   public askNewToken = async (): Promise<SpotifyTokenRefreshResponse> => {
-    if (this.isLoggedIn) {
+    if (this.hasTokens) {
       let request = await fetch(this.refreshTokenUrl, {
         method: "POST",
         headers: {
@@ -90,9 +97,6 @@ class Authentication {
     return Promise.reject();
   };
 
-  get isLoggedIn(): boolean {
-    return this.hasToken && this.hasRefreshToken;
-  }
 }
 
 if (!process.env.REACT_APP_REFRESH_TOKEN_URL) {

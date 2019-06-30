@@ -4,13 +4,27 @@ import {Link} from '@reach/router'
 import {dark, white} from 'styles/modules/colors'
 import {rgba} from 'polished'
 import {AuthenticationService} from 'services/Authentication'
+import AppButton from 'components/ui/AppButton'
+import {observer} from 'mobx-react-lite'
+import {AppStore} from 'stores/AppStore'
+import {useViewerQuery} from 'graphql/components'
+
+const LogoutButton = styled(AppButton)``
 
 const AppNavInner = styled.nav`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   background: ${dark};
   color: ${white};
   box-shadow: 10px 0 40px ${rgba(dark, 0.3)};
+  ${LogoutButton} {
+    align-self: center;
+    margin-top: auto;
+    width: 60%;
+    margin-bottom: 15px;
+  }
 `
 
 const transparentWhite = rgba(white, 0.025);
@@ -56,7 +70,14 @@ const LinksContainer = styled.ul`
 `
 
 const AppNav: React.FC = () => {
-  const { isLoggedIn } = AuthenticationService
+  const viewer = useViewerQuery({ suspend: true })
+  const { isLoggedIn } = AppStore
+  const handleLogout = () => {
+    AuthenticationService.logout()
+    AppStore.loggedOff()
+    viewer.refetch()
+  }
+
   return (
     <AppNavInner>
       <LinksContainer>
@@ -64,8 +85,11 @@ const AppNav: React.FC = () => {
         {!isLoggedIn && <li><Link to="/login">Login</Link></li>}
         <li><Link to="/about">About</Link></li>
       </LinksContainer>
+      {isLoggedIn && <LogoutButton onClick={handleLogout}>Logout</LogoutButton>}
     </AppNavInner>
   )
 }
 
-export default AppNav
+export default observer(
+  AppNav
+)
