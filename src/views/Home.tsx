@@ -14,14 +14,14 @@ const HomeInner = styled.div`
 
 
 const Home: FunctionComponent = props => {
-  const user = useCurrentUser()!
+  const user = useCurrentUser()
 
   return (
     <Page>
       <HomeInner>
         <Card>
           <h1>Home</h1>
-          {user.playlists.items.map(playlist =>
+          {user && user.playlists.items.map(playlist =>
             <li key={playlist.id}><a href={playlist.uri}>{playlist.name}</a></li>
           )}
         </Card>
