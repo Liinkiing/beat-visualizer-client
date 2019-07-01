@@ -1,0 +1,5 @@
+fragment ViewerQuery_user_playlists_item on SpotifyUserPlaylist {
+  href
+  name
+  uri
+}

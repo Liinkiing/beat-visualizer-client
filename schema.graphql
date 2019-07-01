@@ -4,9 +4,24 @@ schema {
   query: Query
 }
 
+interface PaginatedItem {
+  id: ID!
+}
+
 type Query {
   "Get the current user logged into Spotify"
   viewer: SpotifyUser
+}
+
+"A paginated list from the Spotify API"
+type SpotifyPaginatedList {
+  href: String!
+  items: [PaginatedItem!]!
+  limit: Int!
+  next: String
+  offset: Int!
+  previous: String
+  total: Int!
 }
 
 "A user from the Spotify API"
@@ -18,6 +33,9 @@ type SpotifyUser {
   href: String
   id: ID!
   images: [SpotifyUserImage!]!
+  plan: SpotifyUserPlan!
+  player: SpotifyUserPlayer!
+  playlists(limit: Int = 20, offset: Int = 0): SpotifyPaginatedList!
 }
 
 "Represent the followers of the user"
@@ -31,6 +49,53 @@ type SpotifyUserImage {
   height: Int
   url: String!
   width: Int
+}
+
+type SpotifyUserPlayer {
+  "Get the current playing device of the user"
+  device: SpotifyUserPlayerDevice!
+  playing: Boolean!
+  progression(format: ProgressionUnit = MINUTES_SECONDS): String!
+  repeating: Boolean!
+  shuffling: Boolean!
+  timestamp: Int!
+}
+
+type SpotifyUserPlayerDevice {
+  active: Boolean!
+  id: ID!
+  name: String!
+  privateSession: Boolean!
+  restricted: Boolean!
+  type: String!
+  volume: Int!
+}
+
+type SpotifyUserPlaylist implements PaginatedItem {
+  href: String!
+  id: ID!
+  images: [SpotifyUserImage!]!
+  name: String!
+  public: Boolean
+  uri: String!
+}
+
+"Available units for a progression."
+enum ProgressionUnit {
+  #A progression in ms.
+  MILLISECONDS
+  #A progression in 00:00 format.
+  MINUTES_SECONDS
+}
+
+"Available user plans."
+enum SpotifyUserPlan {
+  #A free plan. The user has access to basic Spotify features.
+  FREE
+  #An open plan. Can be considered the same as \"FREE\".
+  OPEN
+  #A premium plan. The user has access to all of Spotify features.
+  PREMIUM
 }
 
 

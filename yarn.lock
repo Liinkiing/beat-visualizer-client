@@ -4929,6 +4929,11 @@ graphql-codegen-core@0.18.2:
     ts-log "2.1.4"
     winston "3.2.1"
 
+graphql-codegen-fragment-matcher@^0.18.2:
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/graphql-codegen-fragment-matcher/-/graphql-codegen-fragment-matcher-0.18.2.tgz#3a4109c66a1519e7c8118bd1453bec59db4baa2a"
+  integrity sha512-pwqg4odyB0jbT6YOYCB+P8Es29LBQxceq/0jD0FbzwXL/shpt1Xyf9yU8opGPyW8ZptUpmS4gAd5cycRWFmyjg==
+
 graphql-codegen-plugin-helpers@0.18.2:
   version "0.18.2"
   resolved "https://registry.yarnpkg.com/graphql-codegen-plugin-helpers/-/graphql-codegen-plugin-helpers-0.18.2.tgz#ce03d02ced0bc28ef2f61e0a5205d85ee7e9ccdb"

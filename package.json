@@ -65,6 +65,7 @@
     "babel-plugin-styled-components": "^1.10.4",
     "graphql-code-generator": "^0.18.2",
     "graphql-codegen-add": "^0.18.2",
+    "graphql-codegen-fragment-matcher": "^0.18.2",
     "graphql-codegen-typescript-react-apollo-template": "^0.18.2"
   }
 }

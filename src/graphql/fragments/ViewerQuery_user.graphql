@@ -1,5 +1,6 @@
 fragment ViewerQuery_user on SpotifyUser {
   displayName
+  plan
   email
   birthdate
   followers {
@@ -8,5 +9,12 @@ fragment ViewerQuery_user on SpotifyUser {
   href
   images {
     url
+  }
+  playlists {
+    href
+    items {
+      id
+      ...ViewerQuery_user_playlists_item
+    }
   }
 }

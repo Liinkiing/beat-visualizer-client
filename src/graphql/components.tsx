@@ -1,6 +1,18 @@
 /* eslint-disable */
 export type Maybe<T> = T | null;
 
+/** Available user plans. */
+export enum SpotifyUserPlan {
+  Premium = "PREMIUM",
+  Free = "FREE",
+  Open = "OPEN"
+}
+/** Available units for a progression. */
+export enum ProgressionUnit {
+  Milliseconds = "MILLISECONDS",
+  MinutesSeconds = "MINUTES_SECONDS"
+}
+
 export type DateTime = any;
 
 // ====================================================
@@ -17,10 +29,22 @@ export type ViewerQueryQuery = {
 
 export type ViewerQueryViewer = ViewerQueryUserFragment;
 
+export type ViewerQueryUserPlaylistsItemFragment = {
+  __typename?: "SpotifyUserPlaylist";
+
+  href: string;
+
+  name: string;
+
+  uri: string;
+};
+
 export type ViewerQueryUserFragment = {
   __typename?: "SpotifyUser";
 
   displayName: string;
+
+  plan: SpotifyUserPlan;
 
   email: string;
 
@@ -31,6 +55,8 @@ export type ViewerQueryUserFragment = {
   href: Maybe<string>;
 
   images: ViewerQueryUserImages[];
+
+  playlists: ViewerQueryUserPlaylists;
 };
 
 export type ViewerQueryUserFollowers = {
@@ -45,6 +71,20 @@ export type ViewerQueryUserImages = {
   url: string;
 };
 
+export type ViewerQueryUserPlaylists = {
+  __typename?: "SpotifyPaginatedList";
+
+  href: string;
+
+  items: ViewerQueryUserItems[];
+};
+
+export type ViewerQueryUserItems = {
+  __typename?: "PaginatedItem";
+
+  id: string;
+} & ViewerQueryUserPlaylistsItemFragment;
+
 import gql from "graphql-tag";
 import * as React from "react";
 import * as ReactApollo from "react-apollo";
@@ -54,9 +94,18 @@ import * as ReactApolloHooks from "react-apollo-hooks";
 // Fragments
 // ====================================================
 
+export const ViewerQueryUserPlaylistsItemFragmentDoc = gql`
+  fragment ViewerQuery_user_playlists_item on SpotifyUserPlaylist {
+    href
+    name
+    uri
+  }
+`;
+
 export const ViewerQueryUserFragmentDoc = gql`
   fragment ViewerQuery_user on SpotifyUser {
     displayName
+    plan
     email
     birthdate
     followers {
@@ -66,7 +115,16 @@ export const ViewerQueryUserFragmentDoc = gql`
     images {
       url
     }
+    playlists {
+      href
+      items {
+        id
+        ...ViewerQuery_user_playlists_item
+      }
+    }
   }
+
+  ${ViewerQueryUserPlaylistsItemFragmentDoc}
 `;
 
 // ====================================================
