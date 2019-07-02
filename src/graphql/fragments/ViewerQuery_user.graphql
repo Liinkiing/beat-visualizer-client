@@ -6,6 +6,9 @@ fragment ViewerQuery_user on SpotifyUser {
   followers {
     total
   }
+  player {
+    ...PlayerBottomBar_player
+  }
   href
   images {
     url

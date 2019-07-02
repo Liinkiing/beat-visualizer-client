@@ -1,11 +1,25 @@
 /* eslint-disable */
 export type Maybe<T> = T | null;
 
+export interface ChangeUserPlayerStateInput {
+  /** Set the shuffling state of the player */
+  shuffle: boolean;
+  /** Set the repeat state of the player */
+  repeat: SpotifyUserRepeatMode;
+
+  clientMutationId: Maybe<string>;
+}
 /** Available user plans. */
 export enum SpotifyUserPlan {
   Premium = "PREMIUM",
   Free = "FREE",
   Open = "OPEN"
+}
+/** Available repeat mode. */
+export enum SpotifyUserRepeatMode {
+  Track = "TRACK",
+  Context = "CONTEXT",
+  Off = "OFF"
 }
 /** Available units for a progression. */
 export enum ProgressionUnit {
@@ -19,6 +33,22 @@ export type DateTime = any;
 // Documents
 // ====================================================
 
+export type ToggleUserPlayerPlaybackMutationVariables = {};
+
+export type ToggleUserPlayerPlaybackMutationMutation = {
+  __typename?: "Mutation";
+
+  toggleUserPlayerPlayback: ToggleUserPlayerPlaybackMutationToggleUserPlayerPlayback;
+};
+
+export type ToggleUserPlayerPlaybackMutationToggleUserPlayerPlayback = {
+  __typename?: "ToggleUserPlayerPlaybackPayload";
+
+  player: ToggleUserPlayerPlaybackMutationPlayer;
+};
+
+export type ToggleUserPlayerPlaybackMutationPlayer = PlayerBottomBarPlayerFragment;
+
 export type ViewerQueryVariables = {};
 
 export type ViewerQueryQuery = {
@@ -28,6 +58,14 @@ export type ViewerQueryQuery = {
 };
 
 export type ViewerQueryViewer = ViewerQueryUserFragment;
+
+export type PlayerBottomBarPlayerFragment = {
+  __typename?: "SpotifyUserPlayer";
+
+  id: string;
+
+  playing: boolean;
+};
 
 export type ViewerQueryUserPlaylistsItemFragment = {
   __typename?: "SpotifyUserPlaylist";
@@ -52,6 +90,8 @@ export type ViewerQueryUserFragment = {
 
   followers: ViewerQueryUserFollowers;
 
+  player: ViewerQueryUserPlayer;
+
   href: Maybe<string>;
 
   images: ViewerQueryUserImages[];
@@ -64,6 +104,8 @@ export type ViewerQueryUserFollowers = {
 
   total: number;
 };
+
+export type ViewerQueryUserPlayer = PlayerBottomBarPlayerFragment;
 
 export type ViewerQueryUserImages = {
   __typename?: "SpotifyUserImage";
@@ -94,6 +136,13 @@ import * as ReactApolloHooks from "react-apollo-hooks";
 // Fragments
 // ====================================================
 
+export const PlayerBottomBarPlayerFragmentDoc = gql`
+  fragment PlayerBottomBar_player on SpotifyUserPlayer {
+    id
+    playing
+  }
+`;
+
 export const ViewerQueryUserPlaylistsItemFragmentDoc = gql`
   fragment ViewerQuery_user_playlists_item on SpotifyUserPlaylist {
     href
@@ -111,6 +160,9 @@ export const ViewerQueryUserFragmentDoc = gql`
     followers {
       total
     }
+    player {
+      ...PlayerBottomBar_player
+    }
     href
     images {
       url
@@ -124,6 +176,7 @@ export const ViewerQueryUserFragmentDoc = gql`
     }
   }
 
+  ${PlayerBottomBarPlayerFragmentDoc}
   ${ViewerQueryUserPlaylistsItemFragmentDoc}
 `;
 
@@ -131,6 +184,76 @@ export const ViewerQueryUserFragmentDoc = gql`
 // Components
 // ====================================================
 
+export const ToggleUserPlayerPlaybackMutationDocument = gql`
+  mutation ToggleUserPlayerPlaybackMutation {
+    toggleUserPlayerPlayback {
+      player {
+        ...PlayerBottomBar_player
+      }
+    }
+  }
+
+  ${PlayerBottomBarPlayerFragmentDoc}
+`;
+export class ToggleUserPlayerPlaybackMutationComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<
+      ToggleUserPlayerPlaybackMutationMutation,
+      ToggleUserPlayerPlaybackMutationVariables
+    >
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<
+        ToggleUserPlayerPlaybackMutationMutation,
+        ToggleUserPlayerPlaybackMutationVariables
+      >
+        mutation={ToggleUserPlayerPlaybackMutationDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type ToggleUserPlayerPlaybackMutationProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<
+    ToggleUserPlayerPlaybackMutationMutation,
+    ToggleUserPlayerPlaybackMutationVariables
+  >
+> &
+  TChildProps;
+export type ToggleUserPlayerPlaybackMutationMutationFn = ReactApollo.MutationFn<
+  ToggleUserPlayerPlaybackMutationMutation,
+  ToggleUserPlayerPlaybackMutationVariables
+>;
+export function ToggleUserPlayerPlaybackMutationHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        ToggleUserPlayerPlaybackMutationMutation,
+        ToggleUserPlayerPlaybackMutationVariables,
+        ToggleUserPlayerPlaybackMutationProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    ToggleUserPlayerPlaybackMutationMutation,
+    ToggleUserPlayerPlaybackMutationVariables,
+    ToggleUserPlayerPlaybackMutationProps<TChildProps>
+  >(ToggleUserPlayerPlaybackMutationDocument, operationOptions);
+}
+export function useToggleUserPlayerPlaybackMutation(
+  baseOptions?: ReactApolloHooks.MutationHookOptions<
+    ToggleUserPlayerPlaybackMutationMutation,
+    ToggleUserPlayerPlaybackMutationVariables
+  >
+) {
+  return ReactApolloHooks.useMutation<
+    ToggleUserPlayerPlaybackMutationMutation,
+    ToggleUserPlayerPlaybackMutationVariables
+  >(ToggleUserPlayerPlaybackMutationDocument, baseOptions);
+}
 export const ViewerQueryDocument = gql`
   query ViewerQuery {
     viewer {

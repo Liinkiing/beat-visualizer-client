@@ -15,6 +15,7 @@ const HomeInner = styled.div`
 const AppPlayer = styled(Player)`
   width: 100%;
   height: 100%;
+  pointer-events: all;
 `
 
 const Home: FunctionComponent = props => {

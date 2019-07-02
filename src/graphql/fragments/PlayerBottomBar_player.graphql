@@ -1,0 +1,4 @@
+fragment PlayerBottomBar_player on SpotifyUserPlayer {
+  id
+  playing
+}

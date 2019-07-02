@@ -2,10 +2,24 @@
 
 schema {
   query: Query
+  mutation: Mutation
 }
 
 interface PaginatedItem {
   id: ID!
+}
+
+type ChangeUserPlayerStatePayload {
+  clientMutationId: String
+  "The newly modified player instance"
+  player: SpotifyUserPlayer!
+}
+
+type Mutation {
+  "Change the current state of the player the user is listening on"
+  changeUserPlayerState(input: ChangeUserPlayerStateInput!): ChangeUserPlayerStatePayload
+  "Start a new context or resume current playback on the user's active device."
+  toggleUserPlayerPlayback: ToggleUserPlayerPlaybackPayload!
 }
 
 type Query {
@@ -35,7 +49,7 @@ type SpotifyUser {
   images: [SpotifyUserImage!]!
   plan: SpotifyUserPlan!
   player: SpotifyUserPlayer!
-  playlists(limit: Int = 20, offset: Int = 0): SpotifyPaginatedList!
+  playlists(limit: Int, offset: Int): SpotifyPaginatedList!
 }
 
 "Represent the followers of the user"
@@ -54,9 +68,11 @@ type SpotifyUserImage {
 type SpotifyUserPlayer {
   "Get the current playing device of the user"
   device: SpotifyUserPlayerDevice!
+  "The ID of an object"
+  id: ID!
   playing: Boolean!
-  progression(format: ProgressionUnit = MINUTES_SECONDS): String!
-  repeating: Boolean!
+  progression(format: ProgressionUnit): String!
+  repeat: SpotifyUserRepeatMode!
   shuffling: Boolean!
   timestamp: Int!
 }
@@ -80,6 +96,12 @@ type SpotifyUserPlaylist implements PaginatedItem {
   uri: String!
 }
 
+type ToggleUserPlayerPlaybackPayload {
+  clientMutationId: String
+  "The newly modified player instance"
+  player: SpotifyUserPlayer!
+}
+
 "Available units for a progression."
 enum ProgressionUnit {
   #A progression in ms.
@@ -96,6 +118,24 @@ enum SpotifyUserPlan {
   OPEN
   #A premium plan. The user has access to all of Spotify features.
   PREMIUM
+}
+
+"Available repeat mode."
+enum SpotifyUserRepeatMode {
+  #Repeat the current context.
+  CONTEXT
+  #Turn repeat off.
+  OFF
+  #Repeat the current track.
+  TRACK
+}
+
+input ChangeUserPlayerStateInput {
+  clientMutationId: String
+  "Set the repeat state of the player"
+  repeat: SpotifyUserRepeatMode!
+  "Set the shuffling state of the player"
+  shuffle: Boolean!
 }
 
 

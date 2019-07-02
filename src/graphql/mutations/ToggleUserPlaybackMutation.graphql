@@ -1,0 +1,7 @@
+mutation ToggleUserPlayerPlaybackMutation {
+  toggleUserPlayerPlayback {
+    player {
+      ...PlayerBottomBar_player
+    }
+  }
+}
