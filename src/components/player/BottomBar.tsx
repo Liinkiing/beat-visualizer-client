@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import AppButton from 'components/ui/AppButton'
 import {PlayerBottomBarPlayerFragment, useToggleUserPlayerPlaybackMutation} from 'graphql/components'
+import {FiPause, FiPlay} from 'react-icons/fi'
 
 interface Props {
   player: PlayerBottomBarPlayerFragment
@@ -29,7 +30,7 @@ const BottomBar: React.FC<Props> = ({ player, ...rest}) => {
     <BottomBarInner {...rest}>
       <BottomBarButtons>
         <ActionButton>Prev</ActionButton>
-        <ActionButton onClick={() => { togglePlay() }}>{ player.playing ? 'Pause' : 'Play'}</ActionButton>
+        <ActionButton icon={player.playing ? FiPause : FiPlay} iconSize={16} onClick={() => { togglePlay() }}/>
         <ActionButton>Next</ActionButton>
       </BottomBarButtons>
     </BottomBarInner>

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect} from "react"
+import React, {FunctionComponent, useEffect, useMemo} from "react"
 import {hot} from 'react-hot-loader/root'
 import {setConfig} from 'react-hot-loader';
 import styled from 'styled-components/macro'
@@ -69,6 +69,8 @@ const AppInner = styled.div`
 
 const App: FunctionComponent = () => {
   const viewer = useViewerQuery({ suspend: true })
+  const Background = useMemo(() => <AppBackground pointsCount={100}/>, [])
+
   useEffect(() => {
     if (viewer && viewer.data && viewer.data.viewer !== null)  {
       AppStore.loggedIn()
@@ -91,7 +93,7 @@ const App: FunctionComponent = () => {
             <Route component={About} path="/about"/>
           </PosedRouter>
         </main>
-        <AppBackground pointsCount={100}/>
+        {Background}
       </AppInner>
     </CurrentUserContext.Provider>
   );

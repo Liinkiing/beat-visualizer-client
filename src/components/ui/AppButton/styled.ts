@@ -76,10 +76,17 @@ export const AppButtonInner = styled.button`
   }}}
 `
 
-export const IconInner = styled.div`
-  width: ${ICON_SIZE.width}px;
-  height: ${ICON_SIZE.height}px;
+export const IconInner = styled.div<{ iconSize: number }>`
+  width: ${({ iconSize }) => iconSize}px;
+  height: ${({ iconSize }) => iconSize}px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   & + ${AppButtonContentInner} {
     margin-left: 10px;
+  }
+  & > * {
+    width: 100%;
+    height: 100%;
   }
 `

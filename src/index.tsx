@@ -13,6 +13,7 @@ import GlobalStyle from "./styles/global"
 import * as serviceWorker from "./serviceWorker"
 import {authLink, errorLink} from 'links'
 import GlobalLoader from 'components/ui/GlobalLoader'
+import {IconContext} from 'react-icons'
 
 const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:4000/graphql' });
 
@@ -34,12 +35,14 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <ApolloHooksProvider client={client}>
-      <GlobalStyle/>
-      <React.Suspense fallback={<GlobalLoader/>}>
-        <App/>
-      </React.Suspense>
-    </ApolloHooksProvider>
+    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
+      <ApolloHooksProvider client={client}>
+        <GlobalStyle/>
+        <React.Suspense fallback={<GlobalLoader/>}>
+          <App/>
+        </React.Suspense>
+      </ApolloHooksProvider>
+    </IconContext.Provider>
   </ApolloProvider>
   , document.getElementById("root"))
 
