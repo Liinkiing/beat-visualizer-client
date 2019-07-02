@@ -2,7 +2,7 @@ import * as React from 'react'
 import {FunctionComponent} from 'react'
 import styled from 'styled-components/macro'
 import Page from 'components/Page'
-import Card from 'components/ui/Card'
+import Player from 'components/player'
 import {useCurrentUser} from 'contexts/user'
 
 const HomeInner = styled.div`
@@ -12,6 +12,10 @@ const HomeInner = styled.div`
   align-items: center;
 `
 
+const AppPlayer = styled(Player)`
+  width: 100%;
+  height: 100%;
+`
 
 const Home: FunctionComponent = props => {
   const user = useCurrentUser()
@@ -19,12 +23,7 @@ const Home: FunctionComponent = props => {
   return (
     <Page>
       <HomeInner>
-        <Card>
-          <h1>Home</h1>
-          {user && user.playlists.items.map(playlist =>
-            <li key={playlist.id}><a href={playlist.uri}>{playlist.name}</a></li>
-          )}
-        </Card>
+        {user && <AppPlayer user={user}/>}
       </HomeInner>
     </Page>
   )
